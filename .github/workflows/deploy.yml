@@ -26,6 +26,12 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
+    # 🔴 REQUIRED FOR GITHUB PAGES
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - name: Checkout selected branch
         uses: actions/checkout@v4
@@ -50,4 +56,5 @@ jobs:
           path: dist
 
       - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
